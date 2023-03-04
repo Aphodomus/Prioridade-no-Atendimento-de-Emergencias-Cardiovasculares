@@ -1,0 +1,1 @@
+# Prioridade no Atendimento de Emergências Cardiovasculares (PAEC)
