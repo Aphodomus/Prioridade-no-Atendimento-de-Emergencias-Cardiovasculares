@@ -1,0 +1,9 @@
+Faker==18.4.0
+Flask==2.2.2
+Flask_PyMongo==2.3.0
+keras==2.10.0
+numpy==1.22.3
+opencv_python==4.6.0.66
+pandas==2.0.1
+pymongo==4.3.3
+tensorflow_gpu==2.10.1
