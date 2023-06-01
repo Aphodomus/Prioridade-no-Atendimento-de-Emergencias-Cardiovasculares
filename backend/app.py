@@ -147,19 +147,68 @@ def predict_ecg(data):
     result = [item[0] for item in result]
 
     # Get diagnosis
-    dict_ecg = {
-        0: 'Fusão dos Batimentos Ventriculares e Normais',
-        1: 'Infarto do Miocárdio',
-        2: 'Batimentos Normais',
-        3: 'Batimento Inclassificável',
-        4: 'Batimento Prematuro Supraventricular',
-        5: 'Contração Ventricular Prematura'
-    }
+    Pode 
     
     for i in range(len(result)):
         result[i] = dict_ecg[result[i]]
 
     return result
+
+def rgb_to_gray(image):
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    image = cv2.merge((image,image,image))
+    image = tf.keras.applications.resnet50.preprocess_input(image)
+    return image
+
+# Predict one image
+@app.route('/predict', methods=['POST'])
+def predict_one_image():
+    try:
+        # Base64 to image
+        image = './images/S0.png'# base64_to_image(image_base_64, 'imagem.png')
+        
+        # Store image into dataframe
+        new_data = {'Filepath': [image], 'Label': ['Any']}
+        df = pd.DataFrame(new_data)
+        
+        # Default variables
+        size=224
+        color_mode='rgb'
+        batch_size=32
+        
+        # Preprocessing image
+        test_generator = tf.keras.preprocessing.image.ImageDataGenerator(
+            preprocessing_function=rgb_to_gray,
+            rescale=1./255
+        )
+        
+        # Create Block
+        test_images = test_generator.flow_from_dataframe(
+            dataframe=df,
+            x_col='Filepath',
+            y_col='Label',
+            target_size=(size, size),
+            color_mode=color_mode,
+            class_mode='categorical',
+            batch_size=batch_size,
+            shuffle=False
+        )
+        
+        # Predict
+        MODEL = load_model('model/best_model.h5')
+        y_pred = MODEL.predict(test_images)
+        y_pred_class = np.argmax(y_pred, axis=1)
+        y_pred_prob = np.round((np.max(y_pred, axis=1) * 100), 2)
+
+        print("Probabilidades:")
+        print(y_pred_prob)
+        print("Classes previstas:")
+        print(y_pred_class)
+
+        return "[SUCCESS]"
+    except Exception as e:
+        print(e)
+        return "[ERROR]"
 
 # Load patients
 @app.route('/insert', methods=['POST'])
