@@ -147,8 +147,16 @@ def predict_ecg(data):
     result = [item[0] for item in result]
 
     # Get diagnosis
-    Pode 
+    dict_ecg = {
+        0: 'Fusão dos Batimentos Ventriculares e Normais',
+        1: 'Infarto do Miocárdio',
+        2: 'Batimentos Normais',
+        3: 'Batimento Inclassificável',
+        4: 'Batimento Prematuro Supraventricular',
+        5: 'Contração Ventricular Prematura'
+    }
     
+    # Result
     for i in range(len(result)):
         result[i] = dict_ecg[result[i]]
 
@@ -164,24 +172,27 @@ def rgb_to_gray(image):
 @app.route('/predict', methods=['POST'])
 def predict_one_image():
     try:
-        # Base64 to image
-        image = './images/S0.png'# base64_to_image(image_base_64, 'imagem.png')
+        # Get image from json request
+        image_base_64 = request.get_json()
         
+        # Base64 to image
+        image = base64_to_image(image_base_64, 'imagem.png')
+
         # Store image into dataframe
         new_data = {'Filepath': [image], 'Label': ['Any']}
         df = pd.DataFrame(new_data)
-        
+
         # Default variables
         size=224
         color_mode='rgb'
         batch_size=32
-        
+
         # Preprocessing image
         test_generator = tf.keras.preprocessing.image.ImageDataGenerator(
             preprocessing_function=rgb_to_gray,
             rescale=1./255
         )
-        
+
         # Create Block
         test_images = test_generator.flow_from_dataframe(
             dataframe=df,
@@ -193,19 +204,28 @@ def predict_one_image():
             batch_size=batch_size,
             shuffle=False
         )
-        
+
         # Predict
         MODEL = load_model('model/best_model.h5')
         y_pred = MODEL.predict(test_images)
         y_pred_class = np.argmax(y_pred, axis=1)
         y_pred_prob = np.round((np.max(y_pred, axis=1) * 100), 2)
 
-        print("Probabilidades:")
-        print(y_pred_prob)
-        print("Classes previstas:")
-        print(y_pred_class)
+        # Get diagnosis
+        dict_ecg = {
+            0: 'Fusão dos Batimentos Ventriculares e Normais',
+            1: 'Infarto do Miocárdio',
+            2: 'Batimentos Normais',
+            3: 'Batimento Inclassificável',
+            4: 'Batimento Prematuro Supraventricular',
+            5: 'Contração Ventricular Prematura'
+        }
 
-        return "[SUCCESS]"
+        # Result final
+        resp_class = dict_ecg[y_pred_class[0]]
+        resp_prob = f"{str(y_pred_prob[0])}%"
+
+        return {"diagnostico": resp_class, "probabilidade": resp_prob}
     except Exception as e:
         print(e)
         return "[ERROR]"
