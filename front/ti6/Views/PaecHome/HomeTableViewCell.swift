@@ -113,8 +113,12 @@ class HomeTableViewCell: UITableViewCell {
     
     private func setColorPriority(_ diagnostico: String?) {
         guard let diagnostico = diagnostico else { return }
-        if diagnostico == "Infarto do Miocárdio" {
+        if diagnostico == "Batimentos Normais" {
+            setBackgroundColor("#fbfce3")
+        } else if diagnostico == "Batimento Prematuro" || diagnostico == "Batimento Prematuro" || diagnostico == "Supraventricular" || diagnostico == "Contração Ventricular Prematura" || diagnostico == "Fusão dos Batimentos Ventriculares e Normais"{
             setBackgroundColor("#edfce3")
+        } else if diagnostico == "Infarto do Miocárdio" {
+            setBackgroundColor("#fce3e4")
         }
     }
     
