@@ -19,6 +19,7 @@
 		595ADFE429BB71A800651A69 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595ADFE329BB71A800651A69 /* HomeView.swift */; };
 		595ADFE629BB7EB400651A69 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595ADFE529BB7EB400651A69 /* HomeTableViewCell.swift */; };
 		597585AE29C0B33C0049C633 /* DiagnosticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597585AD29C0B33C0049C633 /* DiagnosticView.swift */; };
+		597E22AF2A118D76003106E4 /* UploadPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597E22AE2A118D76003106E4 /* UploadPhotoViewController.swift */; };
 		59A39C9E29BF625E00B7D6A8 /* DiagnosticViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A39C9D29BF625E00B7D6A8 /* DiagnosticViewController.swift */; };
 		59A39CA029BF62BB00B7D6A8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A39C9F29BF62BB00B7D6A8 /* ViewController.swift */; };
 		59CA57CC29C38E4A005D83AD /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CA57CB29C38E4A005D83AD /* Presenter.swift */; };
@@ -59,6 +60,7 @@
 		595ADFE329BB71A800651A69 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		595ADFE529BB7EB400651A69 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		597585AD29C0B33C0049C633 /* DiagnosticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticView.swift; sourceTree = "<group>"; };
+		597E22AE2A118D76003106E4 /* UploadPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPhotoViewController.swift; sourceTree = "<group>"; };
 		59A39C9D29BF625E00B7D6A8 /* DiagnosticViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticViewController.swift; sourceTree = "<group>"; };
 		59A39C9F29BF62BB00B7D6A8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		59CA57CB29C38E4A005D83AD /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
@@ -151,6 +153,14 @@
 			path = ti6UITests;
 			sourceTree = "<group>";
 		};
+		597E22AD2A118D5F003106E4 /* UploadPhoto */ = {
+			isa = PBXGroup;
+			children = (
+				597E22AE2A118D76003106E4 /* UploadPhotoViewController.swift */,
+			);
+			path = UploadPhoto;
+			sourceTree = "<group>";
+		};
 		59A39C9A29BF618800B7D6A8 /* PaecHome */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +199,7 @@
 		59CA57C929C3584F005D83AD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				597E22AD2A118D5F003106E4 /* UploadPhoto */,
 				592F398529C9D80900EE46F7 /* PaecListNames */,
 				59A39C9A29BF618800B7D6A8 /* PaecHome */,
 				59A39C9B29BF619000B7D6A8 /* PaecDiagnostic */,
@@ -337,6 +348,7 @@
 				592F398729C9D82C00EE46F7 /* ListNamesViewController.swift in Sources */,
 				59CA57CC29C38E4A005D83AD /* Presenter.swift in Sources */,
 				595ADFB629BB6E5700651A69 /* HomeViewController.swift in Sources */,
+				597E22AF2A118D76003106E4 /* UploadPhotoViewController.swift in Sources */,
 				595ADFE629BB7EB400651A69 /* HomeTableViewCell.swift in Sources */,
 				595ADFE429BB71A800651A69 /* HomeView.swift in Sources */,
 				595ADFB229BB6E5700651A69 /* AppDelegate.swift in Sources */,
@@ -516,6 +528,7 @@
 				DEVELOPMENT_TEAM = 4ACT552AKH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ti6/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ti6;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -526,7 +539,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.larissa.ti6;
+				PRODUCT_BUNDLE_IDENTIFIER = ti6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -544,6 +557,7 @@
 				DEVELOPMENT_TEAM = 4ACT552AKH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ti6/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ti6;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -554,7 +568,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.larissa.ti6;
+				PRODUCT_BUNDLE_IDENTIFIER = ti6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

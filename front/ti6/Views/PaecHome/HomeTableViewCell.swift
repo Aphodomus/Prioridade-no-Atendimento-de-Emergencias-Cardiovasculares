@@ -7,12 +7,6 @@
 
 import UIKit
 
-public struct HomeTableViewCellEntity: Equatable {
-    public let userName: String
-    public let userImage: String
-    public let backgroundColor: String
-}
-
 class HomeTableViewCell: UITableViewCell {
 
     static let identifier = "HomeTableViewCell"
@@ -93,25 +87,39 @@ class HomeTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate(imageConstraint)
     }
     
-    public func updateView(_ entity: HomeTableViewCellEntity) {
-        setImages(entity.userImage)
-        setLabels(entity.userName)
-        setBackgroundColor(entity.backgroundColor)
+    public func updateView(_ entity: UserEntity?) {
+        guard let entity = entity else { return }
+        setImages(entity.foto)
+        setLabels(entity.nome)
+        setColorPriority(entity.diagnostico)
     }
     
-    private func setImages(_ image: String) {
-        userImage.image = UIImage(named: image)
+    private func setImages(_ image: String?) {
+        guard let image = image else { return }
+        
+        let dataDecoded: Data = Data(base64Encoded: image, options: .ignoreUnknownCharacters)!
+        let decodedimage = UIImage(data: dataDecoded)
+        userImage.image = decodedimage
+        
         hStackView.addArrangedSubview(userImage)
     }
     
-    private func setLabels(_ label: String) {
+    private func setLabels(_ label: String?) {
         labelTitle.text = label
         labelTitle.font = .systemFont(ofSize: 17, weight: .bold)
         labelTitle.textColor = UIColor.black
         hStackView.addArrangedSubview(labelTitle)
     }
     
-    private func setBackgroundColor(_ color: String) {
+    private func setColorPriority(_ diagnostico: String?) {
+        guard let diagnostico = diagnostico else { return }
+        if diagnostico == "Infarto do Miocárdio" {
+            setBackgroundColor("#edfce3")
+        }
+    }
+    
+    private func setBackgroundColor(_ color: String?) {
+        guard let color = color else { return }
         view.backgroundColor = UIColor(hexString: color)
         hStackView.backgroundColor = UIColor(hexString: color)
         labelTitle.backgroundColor = UIColor(hexString: color)

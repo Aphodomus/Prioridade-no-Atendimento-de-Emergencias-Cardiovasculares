@@ -173,7 +173,7 @@ def rgb_to_gray(image):
 def predict_one_image():
     try:
         # Get image from json request
-        image_base_64 = request.get_json()
+        image_base_64 = request.get_json().get('imagem')
         
         # Base64 to image
         image = base64_to_image(image_base_64, 'imagem.png')
@@ -225,10 +225,11 @@ def predict_one_image():
         resp_class = dict_ecg[y_pred_class[0]]
         resp_prob = f"{str(y_pred_prob[0])}%"
 
-        return {"diagnostico": resp_class, "probabilidade": resp_prob}
+        print(resp_class, resp_prob)
+        return jsonify({'diagnostico': resp_class, 'probabilidade': resp_prob}), 200 
     except Exception as e:
         print(e)
-        return "[ERROR]"
+        return jsonify({"messagem": str(e)}), 500
 
 # Load patients
 @app.route('/insert', methods=['POST'])

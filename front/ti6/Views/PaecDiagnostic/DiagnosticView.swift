@@ -12,7 +12,7 @@ public protocol DiagnosticViewProtocol: AnyObject {
     var content: UIView { get }
     var delegate: DiagnosticViewDelegate? { get set }
     
-    func updateView(_ entity: DiagnosticViewEntity)
+    func updateView(_ entity: UserEntity?)
 }
 
 class DiagnosticView: UIView {
@@ -110,6 +110,7 @@ class DiagnosticView: UIView {
     }
     
     private func setup() {
+        backgroundColor = .white
         addViewHierarchy()
         addConstraints()
     }
@@ -162,12 +163,17 @@ class DiagnosticView: UIView {
         NSLayoutConstraint.activate(stackConstraints)
     }
     
-    public func updateViewEntity(_ entity: DiagnosticViewEntity) {
-        nameLabel.text = entity.patientName
-        ageLabel.text = entity.patientAge
-        sexLabel.text = entity.patientSex
-        diagnosticLabel.text = entity.patientDiagnostic
-        diagnosticImage.image = entity.patientImage
+    public func updateViewEntity(_ entity: UserEntity?) {
+        guard let entity = entity else { return }
+        nameLabel.text = entity.nome
+        ageLabel.text = entity.idade
+        sexLabel.text = entity.genero
+        diagnosticLabel.text = entity.diagnostico
+        
+        guard let imageEntity = entity.ecg else { return }
+        let dataDecoded: Data = Data(base64Encoded: imageEntity, options: .ignoreUnknownCharacters)!
+        let decodedimage = UIImage(data: dataDecoded)
+        diagnosticImage.image = decodedimage
     }
 
 }
@@ -182,7 +188,7 @@ extension DiagnosticView: DiagnosticViewProtocol {
         }
     }
     
-    func updateView(_ entity: DiagnosticViewEntity) {
+    func updateView(_ entity: UserEntity?) {
         updateViewEntity(entity)
     }
 }

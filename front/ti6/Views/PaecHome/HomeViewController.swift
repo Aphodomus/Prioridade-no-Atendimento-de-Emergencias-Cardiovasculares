@@ -32,7 +32,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         contentSetup()
         presenter.setViewDelegate(delegate: self)
-        presenter.getUsers()
+        presenter.getUsers(UserEntity.self, from: "http://127.0.0.1:5000/telaHome", method: .get)
     }
 
     private func contentSetup() {
@@ -45,9 +45,13 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: ViewDelegate {
-    func didTapCell() {
-        let vc = DiagnosticViewController()
-//        navigationController?.pushViewController(vc, animated: true)
+    func didTapCell(entity: UserEntity?) {
+        let vc = DiagnosticViewController(entity: entity)
+        if #available(iOS 15.0, *) {
+            vc.sheetPresentationController?.detents = [.medium()]
+        } else {
+            // Fallback on earlier versions
+        }
         present(vc, animated: true)
     }
 }
@@ -57,8 +61,14 @@ extension ViewProtocol where Self: UIView {
 }
 
 extension HomeViewController: UserPresenterDelegate {
-    func presentUser(users: [UserEntity]) {
-        self.users = users
-        contentView?.updateView(entity: users)
+    func presentImage<T>(response: T) where T : Decodable {
+        
+    }
+    
+    func presentUser<T>(users: [T]) where T : Decodable {
+        if let getEntity = users as? [UserEntity] {
+            self.users = getEntity
+            contentView?.updateView(entity: getEntity)
+        }
     }
 }

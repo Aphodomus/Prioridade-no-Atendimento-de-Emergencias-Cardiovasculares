@@ -16,7 +16,7 @@ public protocol ViewProtocol: AnyObject {
 }
 
 public protocol ViewDelegate: AnyObject {
-    func didTapCell()
+    func didTapCell(entity: UserEntity?)
 }
 
 public class HomeView: UIView {
@@ -28,6 +28,7 @@ public class HomeView: UIView {
     private var colorsPreference: [String] = ["#edfce3", "#fbfce3", "#fce3e4", "#edfce3", "#fbfce3",
                                               "#fce3e4", "#edfce3", "#edfce3", "#edfce3", "#edfce3"]
     private var users = [UserEntity]()
+    private var entityUser: UserEntity?
     
     private lazy var contentView: UIView = {
         let view = UIView()
@@ -147,15 +148,21 @@ extension HomeView: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.identifier, for: indexPath) as? HomeTableViewCell
         let colorsPreferenceSorted = colorsPreference.sorted(by: >)
-        let entity = HomeTableViewCellEntity(userName: users[indexPath.row].name,
-                                             userImage: userImageEntity[indexPath.row],
-                                             backgroundColor: colorsPreferenceSorted[indexPath.row])
-        cell?.updateView(entity)
+        
+        entityUser = UserEntity(_id: users[indexPath.row]._id,
+                                diagnostico: users[indexPath.row].diagnostico,
+                                ecg: users[indexPath.row].ecg,
+                                foto: users[indexPath.row].foto,
+                                genero: users[indexPath.row].genero,
+                                idade: users[indexPath.row].idade,
+                                nome: users[indexPath.row].nome)
+        
+        cell?.updateView(entityUser)
         return cell ?? UITableViewCell()
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didTapCell()
+        delegate?.didTapCell(entity: users[indexPath.row])
         print("tap here")
     }
 }

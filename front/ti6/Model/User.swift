@@ -9,9 +9,13 @@ import Foundation
 import UIKit
 
 public struct UserEntity: Codable {
-    let name: String
-//    let photo: String
-//    let colorPreferance: String
+    let _id: String?
+    let diagnostico: String?
+    let ecg: String?
+    let foto: String?
+    let genero: String?
+    let idade: String?
+    let nome: String?
 }
 
 public struct DiagnosticViewEntity: Equatable {

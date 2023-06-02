@@ -18,11 +18,12 @@ class ViewController: UIViewController {
     
     func tab() {
         tabBar.tabBar.isTranslucent = false
-        tabBar.tabBar.barTintColor = .white
-        tabBar.tabBar.unselectedItemTintColor = .black
+        tabBar.tabBar.backgroundColor = .black
+        tabBar.tabBar.tintColor = .red
+        tabBar.tabBar.unselectedItemTintColor = .white
         
         let homeVC = HomeViewController()
-        let diagnosticVC = HomeViewController()
+        let diagnosticVC = UploadPhotoViewController()
         
         let navHomeController = UINavigationController(rootViewController: homeVC)
         let navDiagnosticController = UINavigationController(rootViewController: diagnosticVC)

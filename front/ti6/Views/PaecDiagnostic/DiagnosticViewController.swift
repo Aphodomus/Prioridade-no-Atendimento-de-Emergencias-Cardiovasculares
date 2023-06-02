@@ -7,20 +7,21 @@
 
 import UIKit
 
-public protocol DiagnosticViewControllerProtocol: AnyObject {
-    func updateViewController(_ entity: DiagnosticViewEntity)
-}
+public protocol DiagnosticViewControllerProtocol: AnyObject { }
 
 public protocol DiagnosticViewDelegate: AnyObject { }
 
 class DiagnosticViewController: UIViewController {
 
     public let contentView: DiagnosticViewProtocol?
+    private var entity: UserEntity?
     
     // MARK: - INITIALIZERS
     
-    public init(contentView: DiagnosticViewProtocol? = DiagnosticView() ) {
+    public init(contentView: DiagnosticViewProtocol? = DiagnosticView(),
+                entity: UserEntity?) {
         self.contentView = contentView
+        self.entity = entity
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -40,17 +41,12 @@ class DiagnosticViewController: UIViewController {
             self.view = contentView.content
         }
         contentView?.delegate = self
+        contentView?.updateView(entity)
     }
 
 }
 
 extension DiagnosticViewController: DiagnosticViewDelegate { }
-
-extension DiagnosticViewController: DiagnosticViewControllerProtocol {
-    func updateViewController(_ entity: DiagnosticViewEntity) {
-        contentView?.updateView(entity)
-    }
-}
 
 extension DiagnosticViewProtocol where Self: UIView {
     public var content: UIView { return self }
